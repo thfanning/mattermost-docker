@@ -27,6 +27,9 @@ services:
       #   - edition=team
       #   - PUID=1000
       #   - PGID=1000
+    ports:
+      # Restrict access to localhost
+      - "127.0.0.1:8000:8000"
     restart: unless-stopped
     volumes:
       - ./volumes/app/mattermost/config:/mattermost/config:rw
@@ -43,17 +46,18 @@ services:
       # in case your config is not in default location
       #- MM_CONFIG=/mattermost/config/config.json
 
-  web:
-    build: web
-    ports:
-      - "80:80"
-      - "443:443"
-    read_only: true
-    restart: unless-stopped
-    volumes:
-      # This directory must have cert files if you want to enable SSL
-      - ./volumes/web/cert:/cert:ro
-      - /etc/localtime:/etc/localtime:ro
-    # Uncomment for SSL
-    # environment:
-    #  - MATTERMOST_ENABLE_SSL=true
+  # Comment out... we can use Synology's proxy capabilities instead
+  #web:
+  #  build: web
+  #  ports:
+  #    - "80:80"
+  #    - "443:443"
+  #  read_only: true
+  #  restart: unless-stopped
+  #  volumes:
+  #    # This directory must have cert files if you want to enable SSL
+  #    - ./volumes/web/cert:/cert:ro
+  #    - /etc/localtime:/etc/localtime:ro
+  #  # Uncomment for SSL
+  #  # environment:
+  #  - MATTERMOST_ENABLE_SSL=true

@@ -10,6 +10,9 @@ ARG PUID=2000
 ARG PGID=2000
 ARG MM_BINARY=
 
+# The following seems to be needed on Synology so that `addgroup` and `adduser` will work.
+ENV PUID=${PUID}
+ENV PGID=${PGID}
 
 # Install some needed packages
 RUN apk add --no-cache \
